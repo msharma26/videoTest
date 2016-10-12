@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32951D9D1906332A00EDF424"
-               BuildableName = "videoTest.app"
-               BlueprintName = "videoTest"
-               ReferencedContainer = "container:videoTest.xcodeproj">
+               BlueprintIdentifier = "3236BFD9190963BE00EBB2B6"
+               BuildableName = "VideoTest.app"
+               BlueprintName = "VideoTest"
+               ReferencedContainer = "container:VideoTest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32951DC11906332A00EDF424"
-               BuildableName = "videoTestTests.xctest"
-               BlueprintName = "videoTestTests"
-               ReferencedContainer = "container:videoTest.xcodeproj">
+               BlueprintIdentifier = "3236BFFD190963BE00EBB2B6"
+               BuildableName = "VideoTestTests.xctest"
+               BlueprintName = "VideoTestTests"
+               ReferencedContainer = "container:VideoTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "32951D9D1906332A00EDF424"
-            BuildableName = "videoTest.app"
-            BlueprintName = "videoTest"
-            ReferencedContainer = "container:videoTest.xcodeproj">
+            BlueprintIdentifier = "3236BFD9190963BE00EBB2B6"
+            BuildableName = "VideoTest.app"
+            BlueprintName = "VideoTest"
+            ReferencedContainer = "container:VideoTest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "32951D9D1906332A00EDF424"
-            BuildableName = "videoTest.app"
-            BlueprintName = "videoTest"
-            ReferencedContainer = "container:videoTest.xcodeproj">
+            BlueprintIdentifier = "3236BFD9190963BE00EBB2B6"
+            BuildableName = "VideoTest.app"
+            BlueprintName = "VideoTest"
+            ReferencedContainer = "container:VideoTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "32951D9D1906332A00EDF424"
-            BuildableName = "videoTest.app"
-            BlueprintName = "videoTest"
-            ReferencedContainer = "container:videoTest.xcodeproj">
+            BlueprintIdentifier = "3236BFD9190963BE00EBB2B6"
+            BuildableName = "VideoTest.app"
+            BlueprintName = "VideoTest"
+            ReferencedContainer = "container:VideoTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

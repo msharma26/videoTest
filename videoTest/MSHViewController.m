@@ -1,60 +1,60 @@
 //
 //  MSHViewController.m
-//  videoTest
+//  VideoTest
 //
-//  Created by Manu Sharma on 4/22/14.
-//  Copyright (c) 2014 WesterLime Inc. All rights reserved.
+//  Created by Manu Sharma on 4/24/14.
+//  Copyright (c) 2014 Motorola Mobility. All rights reserved.
 //
 
 #import "MSHViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
-#define kVideoURL @"http://manusharma.me/movie/testmovie.mp4"
+#define videoURL @"http://manusharma.me/movie/testmovie.mp4"
 
 @interface MSHViewController ()
 
-@property (nonatomic, strong) AVPlayer *avPlayer;
-@property (nonatomic, strong ) AVPlayerLayer *avPlayerLayer;
-@property (nonatomic, strong) AVPlayerItem *avPlayerItem;
+// AVPlayer Properties
+@property (nonatomic, strong) AVPlayer *vidPlayer;
+@property (nonatomic, strong) AVPlayerLayer *playerLayer;
+
+
+// IBOUtlets
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UISlider *progressSlider;
+
+@property (weak, nonatomic) IBOutlet UILabel *lblCurrentTime;
+@property (weak, nonatomic) IBOutlet UILabel *lblMaxTime;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+
+
+// IBActions
+- (IBAction)playButtonPress:(id)sender;
 
 // Flags
-@property (nonatomic, readwrite) BOOL isPlaying;
+@property (nonatomic, readwrite) id timeObserver;
 
-@property (weak, nonatomic) IBOutlet UIButton *btnPause;
-- (IBAction)btnPressPause:(id)sender;
-
- @end
+@end
 
 @implementation MSHViewController
 
 
+#pragma mark - Life Cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSURL *myVideoURL = [NSURL URLWithString:videoURL];
 
-    NSURL *videoURL = [NSURL URLWithString:kVideoURL];
-    self.avPlayer = [AVPlayer playerWithURL:videoURL];
-    self.avPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:self.avPlayer];
+    // Playing the video
+    [self playVideoAtURL:myVideoURL];
     
-    self.avPlayerLayer.frame = self.view.layer.bounds;
-    [self.view.layer addSublayer: self.avPlayerLayer];
-    
-    [self.avPlayer play];
-    
-    
-    self.avPlayer.actionAtItemEnd = AVPlayerActionAtItemEndNone;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(playerItemDidReachEnd:)
-                                                 name:AVPlayerItemDidPlayToEndTimeNotification
-                                               object:[self.avPlayer currentItem]];
-    
-
-    self.isPlaying = YES;
-
-    
-    //[self.avPlayer addObserver:self forKeyPath:@"status" options:0 context:&ItemStatusContext];
-    
+    // Setting up buttons
+    self.playButton.titleLabel.text = @"";
 }
+
 
 
 
@@ -62,41 +62,98 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
-    
+    // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - video handlers
 
-- (void)playerItemDidReachEnd:(NSNotification *)notification {
-    AVPlayerItem *p = [notification object];
-    [p seekToTime:kCMTimeZero];
+
+#pragma mark - Helper Methods
+-(void) playVideoAtURL : (NSURL*) remoteVideoURL{
     
+    AVPlayerItem *myMovie = [[AVPlayerItem alloc] initWithURL:remoteVideoURL];
     
+    self.vidPlayer = [[AVPlayer alloc] initWithPlayerItem:myMovie];
+    
+    self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.vidPlayer];
+    self.playerLayer.frame = self.view.frame;
+    [self.view.layer addSublayer: self.playerLayer];
+    
+        [self.vidPlayer play];
+
+    [self addObservers];
+    
+     }
+
+- (void ) addObservers {
+    
+    __weak typeof (self) weakSelf = self;
+    
+    self.timeObserver = [self.vidPlayer addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(0.05f, NSEC_PER_SEC)
+                                                                     queue:NULL
+                                                                usingBlock:^(CMTime time) {
+                                                                    
+                                                                    [weakSelf syncProgressBar];
+                                                                }];
 }
 
-# pragma Mark - Device Rotation
+-(void) removeObservers{
+    [self.vidPlayer removeTimeObserver:self.timeObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:self.vidPlayer.currentItem];
+}
 
-- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation))
-    {
-        self.avPlayerLayer.frame = CGRectMake(0,-320,640, 960);
-        //CGRectMake(0,0,320, 240);
+-(void) syncProgressBar{
+    
+    NSInteger duration = CMTimeGetSeconds(self.vidPlayer.currentItem.duration);
+    NSInteger currentTime = CMTimeGetSeconds(self.vidPlayer.currentItem.currentTime);
+    
+    self.progressSlider.maximumValue = duration;
+    self.progressSlider.value = currentTime;
+
+    self.lblCurrentTime.text = [NSString stringWithFormat:@"%ld", (long)currentTime];
+    self.lblMaxTime.text = [NSString stringWithFormat:@"%ld", (long)duration];
+    
+    // progress is just duration.
+    //float progress = (float) currentTime / duration;
+    
+    
+    NSArray *loadedTimeRanges = [[self.vidPlayer currentItem] loadedTimeRanges];
+    CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
+    NSInteger loadedTime = CMTimeGetSeconds(timeRange.start) + CMTimeGetSeconds(timeRange.duration);
+    
+    // progress is loaded time
+    float progress = (float) loadedTime / duration;
+     self.progressView.progress = progress;
+    
+    
+    
+    
+    if (!self.vidPlayer.currentItem.isPlaybackLikelyToKeepUp){
+        [self.loadingIndicator startAnimating];
     }
     else{
-        self.avPlayerLayer.frame = self.view.frame;
+        [self.loadingIndicator stopAnimating];
     }
 }
 
 
-- (IBAction)btnPressPause:(id)sender {
-    if(self.isPlaying){
-    [self.avPlayer pause];
-        self.isPlaying = NO;
-    }
-    else{
-        [self.avPlayer play];
-        self.isPlaying = YES;
-    }
+
+/* 
+    Not being used right now. This method is here only for reference.
+    http://stackoverflow.com/questions/7691854/avplayer-streaming-progress
+ */
+- (NSTimeInterval) availableDuration;
+{
+    NSArray *loadedTimeRanges = [[self.vidPlayer currentItem] loadedTimeRanges];
+    CMTimeRange timeRange = [[loadedTimeRanges objectAtIndex:0] CMTimeRangeValue];
+    float startSeconds = CMTimeGetSeconds(timeRange.start);
+    float durationSeconds = CMTimeGetSeconds(timeRange.duration);
+    NSTimeInterval result = startSeconds + durationSeconds;
+    return result;
+}
+
+
+#pragma mark - IBActions
+- (IBAction)playButtonPress:(id)sender {
+    [self.vidPlayer play];
 }
 @end

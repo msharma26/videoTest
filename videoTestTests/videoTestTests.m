@@ -1,18 +1,18 @@
 //
-//  videoTestTests.m
-//  videoTestTests
+//  VideoTestTests.m
+//  VideoTestTests
 //
-//  Created by Manu Sharma on 4/22/14.
-//  Copyright (c) 2014 WesterLime Inc. All rights reserved.
+//  Created by Manu Sharma on 4/24/14.
+//  Copyright (c) 2014 Motorola Mobility. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface videoTestTests : XCTestCase
+@interface VideoTestTests : XCTestCase
 
 @end
 
-@implementation videoTestTests
+@implementation VideoTestTests
 
 - (void)setUp
 {

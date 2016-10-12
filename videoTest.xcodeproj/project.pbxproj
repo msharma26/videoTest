@@ -22,6 +22,7 @@
 		32951DC61906332A00EDF424 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32951DA51906332A00EDF424 /* UIKit.framework */; };
 		32951DCE1906332A00EDF424 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 32951DCC1906332A00EDF424 /* InfoPlist.strings */; };
 		32951DD01906332A00EDF424 /* videoTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32951DCF1906332A00EDF424 /* videoTestTests.m */; };
+		32951DDA190636F100EDF424 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32951DD9190636F100EDF424 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		32951DCB1906332A00EDF424 /* videoTestTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "videoTestTests-Info.plist"; sourceTree = "<group>"; };
 		32951DCD1906332A00EDF424 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		32951DCF1906332A00EDF424 /* videoTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = videoTestTests.m; sourceTree = "<group>"; };
+		32951DD9190636F100EDF424 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32951DDA190636F100EDF424 /* AVFoundation.framework in Frameworks */,
 				32951DA41906332A00EDF424 /* CoreGraphics.framework in Frameworks */,
 				32951DA61906332A00EDF424 /* UIKit.framework in Frameworks */,
 				32951DA21906332A00EDF424 /* Foundation.framework in Frameworks */,
@@ -103,6 +106,7 @@
 		32951DA01906332A00EDF424 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				32951DD9190636F100EDF424 /* AVFoundation.framework */,
 				32951DA11906332A00EDF424 /* Foundation.framework */,
 				32951DA31906332A00EDF424 /* CoreGraphics.framework */,
 				32951DA51906332A00EDF424 /* UIKit.framework */,
@@ -391,10 +395,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manu Sharma (ESVUYPA985)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "videoTest/videoTest-Prefix.pch";
 				INFOPLIST_FILE = "videoTest/videoTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6A58E36B-F25B-4CE0-B7D3-D36815E20464";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -404,10 +410,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Manu Sharma (ESVUYPA985)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "videoTest/videoTest-Prefix.pch";
 				INFOPLIST_FILE = "videoTest/videoTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "6A58E36B-F25B-4CE0-B7D3-D36815E20464";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
